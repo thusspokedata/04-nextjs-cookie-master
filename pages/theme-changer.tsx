@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { GetServerSideProps } from 'next';
+// import { GetServerSideProps } from 'next';
 import {
   Button,
   Card,
@@ -11,9 +11,8 @@ import {
   RadioGroup,
 } from '@mui/material';
 
-// import Cookies from 'js-cookie';
-// import axios from 'axios';
-
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import { Layout } from '../components/layouts';
 
 interface Props {
@@ -21,32 +20,20 @@ interface Props {
 }
 
 const ThemeChangerPage: FC<Props> = ({ theme }) => {
-  // console.log({ props })
-
   const [currentTheme, setCurrentTheme] = useState(theme);
 
   const onThemeChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedTheme = event.target.value;
-
-    console.log({ selectedTheme });
     setCurrentTheme(selectedTheme);
-
-    localStorage.setItem('theme', selectedTheme);
+    // localStorage.setItem('theme', selectedTheme);
     Cookies.set('theme', selectedTheme);
   };
 
   const onClick = async () => {
     const { data } = await axios.get('/api/hello');
 
-    console.log({ data });
+    console.log('this is data', { data });
   };
-
-  useEffect(() => {
-    console.log('LocalStorage:', localStorage.getItem('theme'));
-    console.log('Cookies:', Cookies.get('theme'));
-
-    // axios.post('/api/hello', { localStorage.getItem('them')});
-  }, []);
 
   return (
     <Layout>
@@ -76,19 +63,16 @@ const ThemeChangerPage: FC<Props> = ({ theme }) => {
   );
 };
 
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
+// export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+//   const { theme = 'light', name = 'No name' } = req.cookies;
+//   const validThemes = ['light', 'dark', 'custom'];
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const { theme = 'light', name = 'No name' } = req.cookies;
-  const validThemes = ['light', 'dark', 'custom'];
-
-  return {
-    props: {
-      theme: validThemes.includes(theme) ? theme : 'dark',
-      name,
-    },
-  };
-};
+//   return {
+//     props: {
+//       theme: validThemes.includes(theme) ? theme : 'dark',
+//       name,
+//     },
+//   };
+// };
 
 export default ThemeChangerPage;
