@@ -19,7 +19,7 @@ interface Props {
   theme: string;
 }
 
-const ThemeChangerPage: FC<Props> = ({ theme }) => {
+const ThemeChangerPage: FC<Props> = ({ theme = 'light' }) => {
   const [currentTheme, setCurrentTheme] = useState(theme);
 
   const onThemeChange = (event: ChangeEvent<HTMLInputElement>) => {
