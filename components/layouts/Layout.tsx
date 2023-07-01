@@ -1,11 +1,18 @@
 import Head from 'next/head';
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
+import { Navbar } from '../ui/Navbar';
 
-export const Layout: FC = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Head>{}</Head>
-      <nav></nav>
+      <nav>
+        <Navbar />
+      </nav>
       <main style={{ padding: '20px, 50px' }}>{children}</main>
     </>
   );
